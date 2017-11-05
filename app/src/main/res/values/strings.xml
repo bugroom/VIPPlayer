@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">VIP Player</string>
+    <string name="first_time">Loading...</string>
+    <string name="home">HOME</string>
+    <string name="go">GO</string>
+    <string name="enter_url">Enter URL</string>
+    <string name="installing">Installing...</string>
+    <string name="initialization">Initialization...</string>
+    <string name="downloading">Downloading</string>
+    <string name="about">About</string>
+    <string name="analysis_api">Analysis API</string>
+    <string name="app_descrip">Instruction: no</string>
+    <string name="app_credits">refgd</string>
+    <string name="defaultapi">Default Api</string>
+    <string name="defaultDesc">App comes with api</string>
+    <string name="apiname">Api Name</string>
+    <string name="apiurl">Api Url</string>
+    <string name="addapi">Add Api Url</string>
+    <string name="addBtn">Add</string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="setapi">Edit Api</string>
+    <string name="setBtn">Set</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="wrongapimsg">Api url has to start with \"http://\" or \"https://\"</string>
+    <string name="confirmBtn">Confirm</string>
+    <string name="quitnow">Quit now?</string>
+</resources>

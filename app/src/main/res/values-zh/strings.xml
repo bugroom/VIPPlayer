@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VIP Player</string>
+    <string name="first_time">加载中...</string>
+    <string name="home">主页</string>
+    <string name="go">前往</string>
+    <string name="enter_url">输入地址</string>
+    <string name="installing">安装中...</string>
+    <string name="initialization">初始化中...</string>
+    <string name="downloading">下载中...</string>
+    <string name="about">关于</string>
+    <string name="analysis_api">解析接口</string>
+    <string name="app_descrip">使用说明: 点击播放按钮进行视屏解析</string>
+    <string name="app_credits">refgd</string>
+    <string name="defaultapi">默认接口</string>
+    <string name="defaultDesc">程序自带接口</string>
+    <string name="apiname">接口名称</string>
+    <string name="apiurl">接口地址</string>
+    <string name="addapi">添加接口</string>
+    <string name="addBtn">添加</string>
+    <string name="cancelBtn">取消</string>
+    <string name="setapi">编辑接口</string>
+    <string name="setBtn">启用</string>
+    <string name="deleteBtn">删除</string>
+    <string name="wrongapimsg">接口地址必须以\"http://\"或\"https://\"开头</string>
+    <string name="confirmBtn">确认</string>
+    <string name="quitnow">现在退出?</string>
+</resources>
