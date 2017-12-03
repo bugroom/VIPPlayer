@@ -40,6 +40,7 @@ import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.DownloadListener;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebBackForwardList;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     private ValueCallback<Uri> uploadFile;
 
     private URL mIntentUrl;
+
+    private String pageUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!mUrl.hasFocus()) {
                     // !tbsContent.getUrl().equalsIgnoreCase(url)  &&
                     String url = view.getUrl();
+                    int p = url.indexOf("?");
+                    if(p>0) url = url.substring(0, p);
                     if(Pattern.matches(regex, url)){
                         mPlay.setVisibility(View.VISIBLE);
                     }else{
@@ -344,8 +349,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (mWebView != null && mWebView.canGoBack())
-                    mWebView.goBack();
+                goBackInWebView();
             }
         });
 
@@ -514,13 +518,14 @@ public class MainActivity extends AppCompatActivity {
                 if(mWebView != null){
                     SharedPreferences prefs = getSharedPreferences(FIELDS.SP_NAME, Context.MODE_PRIVATE);
                     long curId = prefs.getLong(FIELDS.SP_API_ID, (long)0);
-                    String api_url = "";
+                    String api_url;
                     if(curId == 0 ){
                         api_url = FIELDS.DEFAULT_API;
                     }else{
                         api_url = prefs.getString(FIELDS.SP_API_URL, FIELDS.DEFAULT_API);
                     }
-                    mWebView.loadUrl(api_url+ URLEncoder.encode(mWebView.getUrl()));
+                    pageUrl = mWebView.getUrl();
+                    mWebView.loadUrl(api_url+ URLEncoder.encode(pageUrl));
                 }
             }
         });
@@ -563,6 +568,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public boolean goBackInWebView() {
+        if (mWebView != null && mWebView.canGoBack()) {
+            boolean found = false;
+            if(pageUrl != ""){
+                WebBackForwardList history = mWebView.copyBackForwardList();
+                int index = -1;
+                int curi = history.getCurrentIndex();
+
+                while (mWebView.canGoBackOrForward(index)) {
+                    if (history.getItemAtIndex(curi + index).getUrl().equals(pageUrl)) {
+                        mWebView.goBackOrForward(index);
+                        found = true;
+                        break;
+                    }
+                    index--;
+                }
+                pageUrl = "";
+            }
+
+            if(!found) mWebView.goBack();
+
+            if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 16)
+                changGoForwardButton(mWebView);
+            return true;
+        }
+        return false;
+    }
+
     boolean[] m_selected = new boolean[] { true, true, true, true, false,
             false, true };
 
@@ -570,10 +603,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mWebView != null && mWebView.canGoBack()) {
-                mWebView.goBack();
-                if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 16)
-                    changGoForwardButton(mWebView);
+            if (goBackInWebView()) {
                 return true;
             } else
                 return super.onKeyDown(keyCode, event);

@@ -108,7 +108,12 @@ public class ZLoadingDialog {
         {
             cancel();
         }
-        mZLoadingDialog = new Dialog(this.mContext.get(), this.mThemeResId);
+        mZLoadingDialog = new Dialog(this.mContext.get(), this.mThemeResId){
+            @Override
+            public void onBackPressed() {
+                //do your stuff
+            }
+        };
         View contentView = createContentView();
         ZLoadingView zLoadingView = (ZLoadingView) contentView.findViewById(R.id.z_loading_view);
         zCustomTextView = (TextView) contentView.findViewById(R.id.z_custom_text_view);
