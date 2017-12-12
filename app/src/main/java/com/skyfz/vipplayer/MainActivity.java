@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mUrl;
     private ZLoadingDialog LoadingDialog = null;
 
-    private static final String mHomeUrl = "http://m.v.baidu.com/";
+    private static final String mHomeUrl = "http://m.baidu.com/";
     private static final String TAG = "VIPlayer";
     private static final int MAX_LENGTH = 14;
 
@@ -188,6 +188,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // baidu
                 if (url.startsWith("bdvideo:")) {
+                    handled = true;
+                }
+
+                if (url.startsWith("intent:")) {
                     handled = true;
                 }
 
@@ -524,8 +528,7 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         api_url = prefs.getString(FIELDS.SP_API_URL, FIELDS.DEFAULT_API);
                     }
-                    pageUrl = mWebView.getUrl();
-                    mWebView.loadUrl(api_url+ URLEncoder.encode(pageUrl));
+                    mWebView.loadUrl(api_url+ URLEncoder.encode(getMediaUrl()));
                 }
             }
         });
@@ -552,6 +555,29 @@ public class MainActivity extends AppCompatActivity {
                     .create().show();
             }
         });
+    }
+
+    private String getMediaUrl(){
+        if(mWebView != null){
+            pageUrl = mWebView.getUrl();
+            String url = pageUrl;
+//            int p = url.indexOf("?");
+//            if(p>0) url = url.substring(0, p);
+            if(url.indexOf("m.iqiyi")>0){
+                url = url.replace("m.iqiyi", "www.iqiyi");
+            }else if(url.indexOf("m.youku")>0){
+                url = url.replace("m.youku", "v.youku");
+            }else if(url.indexOf("m.tv.sohu")>0){
+                url = url.replace("m.tv.sohu", "tv.sohu");
+            }else if(url.indexOf("m.v.qq")>0){
+                url = url.replace("m.v.qq", "v.qq");
+            }else if(url.indexOf("m.mgtv.com/#")>0){
+                url = url.replace("m.mgtv.com/#", "www.mgtv.com");
+                url += ".html";
+            }
+            return url;
+        }
+        return "";
     }
 
     private void goUrl(String url){

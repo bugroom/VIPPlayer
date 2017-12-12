@@ -7,8 +7,8 @@ android {
         applicationId "com.skyfz.vipplayer"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         // Specifies the ABI configurations of your native
         // libraries Gradle should build and package with your APK.
